@@ -25,6 +25,6 @@ class CustomerController {
         }.toString()
 
         CustomerModel(id, customer.name, customer.email)
-        println(custom)
+        println(customers)
     }
 }
