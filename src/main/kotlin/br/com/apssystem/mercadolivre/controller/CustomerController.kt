@@ -11,7 +11,7 @@ class CustomerController {
     val customers = mutableListOf<CustomerModel>()
 
     @GetMapping
-    fun getCustomer(): List<CustomerModel>{
+    fun getListAll(): List<CustomerModel>{
         return customers;
     }
 
@@ -24,7 +24,12 @@ class CustomerController {
             customers.last().id.toInt() + 1
         }.toString()
 
-        CustomerModel(id, customer.name, customer.email)
-        println(customers)
+        customers.add(CustomerModel(id, customer.name, customer.email))
     }
+
+    @GetMapping("/{idCustomer}")
+    fun getCustomer(@PathVariable idCustomer: String): CustomerModel {
+        return customers.filter { it.id == idCustomer }.first()
+    }
+
 }
