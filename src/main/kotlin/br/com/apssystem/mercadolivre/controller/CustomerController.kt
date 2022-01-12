@@ -12,7 +12,10 @@ class CustomerController {
     val customers = mutableListOf<CustomerModel>()
 
     @GetMapping
-    fun getListAll(): List<CustomerModel> {
+    fun getListAll(@RequestParam name: String?): List<CustomerModel> {
+        name?.let {
+            return customers.filter { it.name.contains(name, true) }
+        }
         return customers;
     }
 
@@ -24,7 +27,6 @@ class CustomerController {
         } else {
             customers.last().id.toInt() + 1
         }.toString()
-
         customers.add(CustomerModel(id, customer.name, customer.email))
     }
 
@@ -47,6 +49,5 @@ class CustomerController {
     fun delete(@PathVariable idCustomer: String) {
         customers.removeIf { it.id == idCustomer }
     }
-
 
 }
