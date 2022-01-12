@@ -12,16 +12,16 @@ class CustomerController {
     val customers = mutableListOf<CustomerModel>()
 
     @GetMapping
-    fun getListAll(): List<CustomerModel>{
+    fun getListAll(): List<CustomerModel> {
         return customers;
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun create(@RequestBody customer: CustomerInput){
-        val id = if (customers.isEmpty()){
+    fun create(@RequestBody customer: CustomerInput) {
+        val id = if (customers.isEmpty()) {
             1
-        }else{
+        } else {
             customers.last().id.toInt() + 1
         }.toString()
 
@@ -29,17 +29,24 @@ class CustomerController {
     }
 
     @GetMapping("/{idCustomer}")
-    fun getCustomer(@PathVariable idCustomer: String ): CustomerModel {
+    fun getCustomer(@PathVariable idCustomer: String): CustomerModel {
         return customers.filter { it.id == idCustomer }.first()
     }
 
     @PutMapping("{/idCustomer}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun update(@PathVariable idCustomer: String, @RequestBody customer: CustomerInput){
+    fun update(@PathVariable idCustomer: String, @RequestBody customer: CustomerInput) {
         customers.first { it.id == idCustomer }.let {
             it.name = customer.name
             it.email = customer.email
         }
     }
+
+    @DeleteMapping("{/idCustomer}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun delete(@PathVariable idCustomer: String) {
+        customers.removeIf { it.id == idCustomer }
+    }
+
 
 }
