@@ -29,13 +29,13 @@ class CustomerController(
         service.create(customer.toCustomerModel())
     }
 
-    @PutMapping("{/idCustomer}")
+    @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun update(@PathVariable id: String, @RequestBody customer: CustomerInput) {
         return service.update(id, customer.toCustomerModel(id))
     }
 
-    @DeleteMapping("{/idCustomer}")
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun delete(@PathVariable id: String) {
         service.delete(id)
