@@ -2,7 +2,7 @@ package br.com.apssystem.mercadolivre.controller
 
 import br.com.apssystem.mercadolivre.controller.input.CustomerInput
 import br.com.apssystem.mercadolivre.dto.toCustomerModel
-import br.com.apssystem.mercadolivre.model.CustomerModel
+import br.com.apssystem.mercadolivre.model.Customer
 import br.com.apssystem.mercadolivre.service.CustomerService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
@@ -14,12 +14,12 @@ class CustomerController(
 ) {
 
     @GetMapping
-    fun getListAll(@RequestParam name: String?): List<CustomerModel> {
+    fun getListAll(@RequestParam name: String?): List<Customer> {
         return service.getListAll(name)
     }
 
     @GetMapping("/{id}")
-    fun getFindByID(@PathVariable id: String): CustomerModel {
+    fun getFindByID(@PathVariable id: Int): Customer {
         return service.getFindByID(id)
     }
 
@@ -31,13 +31,13 @@ class CustomerController(
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun update(@PathVariable id: String, @RequestBody customer: CustomerInput) {
+    fun update(@PathVariable id: Int, @RequestBody customer: CustomerInput) {
         return service.update(id, customer.toCustomerModel(id))
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun delete(@PathVariable id: String) {
+    fun delete(@PathVariable id: Int) {
         service.delete(id)
     }
 

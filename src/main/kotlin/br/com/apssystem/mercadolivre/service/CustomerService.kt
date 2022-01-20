@@ -1,49 +1,40 @@
 package br.com.apssystem.mercadolivre.service
 
-import br.com.apssystem.mercadolivre.controller.input.CustomerInput
-import br.com.apssystem.mercadolivre.model.CustomerModel
+import br.com.apssystem.mercadolivre.model.Customer
+import br.com.apssystem.mercadolivre.repository.CustomerRepository
 import org.springframework.stereotype.Service
 
 @Service
-class CustomerService {
+class CustomerService(
+    val customerRepository: CustomerRepository
+) {
 
-    val customers = mutableListOf<CustomerModel>()
-
-    fun getListAll(name: String?): List<CustomerModel> {
+    fun getListAll(name: String?): List<Customer> {
         name?.let {
-            return customers.filter { it.name.contains(name) }
+            return customerRepository.findByNameContaining(name)
         }
-        return customers;
+        return customerRepository.findAll().toList();
     }
 
-    fun getFindByID(id: String): CustomerModel {
-        return customers.filter { it.id == id }.first()
+    fun getFindByID(id: Int): Customer {
+        return customerRepository.findById(id).get()
+     }
+
+    fun create(customer: Customer) {
+        customerRepository.save(customer)
     }
 
-    fun create(customer: CustomerModel) {
-        val id = gerID()
-        customers.add(CustomerModel(id, customer.name, customer.email))
-    }
-
-    fun update(id: String, customer: CustomerModel) {
-        customers.first { it.id == id }.let {
-            it.name = customer.name
-            it.email = customer.email
+    fun update(id: Int, customer: Customer) {
+        if(!customerRepository.existsById(id!!)){
+            throw Exception()
         }
+        customerRepository.save(customer)
     }
 
-    fun delete(id: String) {
-        customers.removeIf { it.id == id }
+    fun delete(id: Int) {
+        customerRepository.deleteById(id)
     }
 
-    private fun gerID(): String {
-        val id = if (customers.isEmpty()) {
-            1
-        } else {
-            customers.last().id!!.toInt() + 1
-        }.toString()
-        return id
-    }
 }
 
 

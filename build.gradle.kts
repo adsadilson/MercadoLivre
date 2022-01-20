@@ -5,6 +5,7 @@ plugins {
 	id("io.spring.dependency-management") version "1.0.11.RELEASE"
 	kotlin("jvm") version "1.6.10"
 	kotlin("plugin.spring") version "1.6.10"
+	kotlin("plugin.jpa") version "1.4.30"
 }
 
 group = "br.com.apssystem.mercadolivre"
@@ -22,7 +23,10 @@ dependencies {
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-	runtimeOnly("mysql:mysql-connector-java")
+	implementation("org.flywaydb:flyway-core:8.4.2")
+
+	runtimeOnly("mysql:mysql-connector-java:8.0.12")
+
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
