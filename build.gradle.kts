@@ -23,7 +23,7 @@ dependencies {
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-	implementation("org.flywaydb:flyway-core:8.4.2")
+	implementation("org.flywaydb:flyway-core:8.4.1")
 
 	runtimeOnly("mysql:mysql-connector-java:8.0.12")
 

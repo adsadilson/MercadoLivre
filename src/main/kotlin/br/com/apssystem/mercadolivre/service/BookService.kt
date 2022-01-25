@@ -10,14 +10,14 @@ class BookService(
     val bookRepository: BookRepository
 ) {
 
-    fun getListAll(name: String?): List<Book> {
+    fun findListAll(name: String?): List<Book> {
         name?.let {
             return bookRepository.findByNameContaining(name)
         }
         return bookRepository.findAll().toList();
     }
 
-    fun getByID(id: Int): Book {
+    fun findByID(id: Int): Book {
         return bookRepository.findById(id).get()
     }
 
@@ -42,8 +42,8 @@ class BookService(
         return true
     }
 
-    fun getFindActive(): List<Book> {
-        return bookRepository.statusActive(BookStatus.ATIVO)
+    fun findActive(): List<Book> {
+        return bookRepository.findByStatus(BookStatus.ATIVO)
     }
 
 }

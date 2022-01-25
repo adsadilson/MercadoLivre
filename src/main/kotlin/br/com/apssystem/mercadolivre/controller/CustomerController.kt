@@ -1,8 +1,9 @@
 package br.com.apssystem.mercadolivre.controller
 
 import br.com.apssystem.mercadolivre.controller.input.CustomerInput
-import br.com.apssystem.mercadolivre.dto.toCustomerModel
-import br.com.apssystem.mercadolivre.model.Customer
+import br.com.apssystem.mercadolivre.controller.response.CustomerResponse
+import br.com.apssystem.mercadolivre.dto.toModel
+import br.com.apssystem.mercadolivre.dto.toResponse
 import br.com.apssystem.mercadolivre.service.CustomerService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
@@ -14,25 +15,25 @@ class CustomerController(
 ) {
 
     @GetMapping
-    fun getListAll(@RequestParam name: String?): List<Customer> {
-        return service.getListAll(name)
+    fun listAll(@RequestParam name: String?): List<CustomerResponse> {
+        return service.getListAll(name).map { it.toResponse() }
     }
 
     @GetMapping("/{id}")
-    fun getFindByID(@PathVariable id: Int): Customer {
-        return service.getFindByID(id)
+    fun findByID(@PathVariable id: Int): CustomerResponse {
+        return service.getFindByID(id).toResponse()
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     fun create(@RequestBody customer: CustomerInput) {
-        service.create(customer.toCustomerModel())
+        service.create(customer.toModel())
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun update(@PathVariable id: Int, @RequestBody customer: CustomerInput) {
-        return service.update(id, customer.toCustomerModel(id))
+        return service.update(id, customer.toModel(id))
     }
 
     @DeleteMapping("/{id}")
