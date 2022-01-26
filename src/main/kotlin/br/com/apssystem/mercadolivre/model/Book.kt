@@ -1,10 +1,12 @@
 package br.com.apssystem.mercadolivre.model
 
 import br.com.apssystem.mercadolivre.enums.BookStatus
+import br.com.apssystem.mercadolivre.enums.Errors
+import br.com.apssystem.mercadolivre.exceptions.BadRequestException
 import java.math.BigDecimal
 import javax.persistence.*
 
-@Entity
+@Entity(name = "book")
 data class Book(
 
     @Id
@@ -26,7 +28,7 @@ data class Book(
     var status: BookStatus? = null
         set(value) {
             if (field == BookStatus.CANCELADO || field == BookStatus.DELETADO) {
-                throw Exception("Não é possivel alterar um livro com status ${field}")
+                throw BadRequestException(Errors.ML102.message.format(field), Errors.ML201.code)
             }
             field = value
         }

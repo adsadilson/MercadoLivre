@@ -1,5 +1,7 @@
 package br.com.apssystem.mercadolivre.service
 
+import br.com.apssystem.mercadolivre.enums.Errors
+import br.com.apssystem.mercadolivre.exceptions.NotFoundException
 import br.com.apssystem.mercadolivre.model.Customer
 import br.com.apssystem.mercadolivre.repository.CustomerRepository
 import org.springframework.stereotype.Service
@@ -17,7 +19,9 @@ class CustomerService(
     }
 
     fun getFindByID(id: Int): Customer {
-        return customerRepository.findById(id).get()
+        return customerRepository.findById(id).orElseThrow {
+            NotFoundException(Errors.ML201.message.format(id), Errors.ML201.code)
+        }
      }
 
     fun create(customer: Customer) {
@@ -33,6 +37,10 @@ class CustomerService(
 
     fun delete(id: Int) {
         customerRepository.deleteById(id)
+    }
+
+    fun emailAvailable(email: String) : Boolean{
+        return !customerRepository.existsByEmail(email);
     }
 
 }

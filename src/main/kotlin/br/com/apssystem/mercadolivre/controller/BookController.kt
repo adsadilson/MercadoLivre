@@ -21,7 +21,7 @@ class BookController(
 ) {
 
     @GetMapping
-    fun listAll(
+    fun findAll(
         @RequestParam name: String?,
         @PageableDefault(page = 0, size = 10) pageable: Pageable
     ): Page<BookResponse> {

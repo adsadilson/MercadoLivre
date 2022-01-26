@@ -7,6 +7,7 @@ import br.com.apssystem.mercadolivre.dto.toResponse
 import br.com.apssystem.mercadolivre.service.CustomerService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
+import javax.validation.Valid
 
 @RestController
 @RequestMapping("/customers")
@@ -26,7 +27,7 @@ class CustomerController(
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun create(@RequestBody customer: CustomerInput) {
+    fun create(@RequestBody @Valid customer: CustomerInput) {
         service.create(customer.toModel())
     }
 
