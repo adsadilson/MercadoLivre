@@ -53,6 +53,10 @@ class BookService(
         return bookRepository.findByStatus(BookStatus.ATIVO, pageable)
     }
 
+    fun findAllByIds(bookIds: Set<Int>): List<Book> {
+        return bookRepository.findAllById(bookIds).toList();
+    }
+
 }
 
 
