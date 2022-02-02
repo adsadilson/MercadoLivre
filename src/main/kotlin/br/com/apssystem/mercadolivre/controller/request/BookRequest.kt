@@ -1,9 +1,9 @@
-package br.com.apssystem.mercadolivre.controller.input
+package br.com.apssystem.mercadolivre.controller.request
 
 import com.fasterxml.jackson.annotation.JsonAlias
 import java.math.BigDecimal
 
-data class BookInput (
+data class BookRequest (
 
     var name: String,
 

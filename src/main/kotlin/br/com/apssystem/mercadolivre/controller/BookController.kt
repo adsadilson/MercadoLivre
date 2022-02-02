@@ -1,7 +1,7 @@
 package br.com.apssystem.mercadolivre.controller
 
-import br.com.apssystem.mercadolivre.controller.input.BookInput
-import br.com.apssystem.mercadolivre.controller.input.BookInputUpdate
+import br.com.apssystem.mercadolivre.controller.request.BookRequest
+import br.com.apssystem.mercadolivre.controller.request.BookRequestUpdate
 import br.com.apssystem.mercadolivre.controller.response.BookResponse
 import br.com.apssystem.mercadolivre.dto.toModel
 import br.com.apssystem.mercadolivre.dto.toResponse
@@ -40,14 +40,14 @@ class BookController(
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun create(@RequestBody book: BookInput) {
-        val customer = customerService.getFindByID(book.customerId)
+    fun create(@RequestBody book: BookRequest) {
+        val customer = customerService.findByID(book.customerId)
         service.create(book.toModel(customer))
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun update(@PathVariable id: Int, @RequestBody book: BookInputUpdate) {
+    fun update(@PathVariable id: Int, @RequestBody book: BookRequestUpdate) {
         val bookSaved = service.findByID(id)
         return service.update(book.toModel(bookSaved))
     }

@@ -11,14 +11,14 @@ class CustomerService(
     val customerRepository: CustomerRepository
 ) {
 
-    fun getListAll(name: String?): List<Customer> {
+    fun findAll(name: String?): List<Customer> {
         name?.let {
             return customerRepository.findByNameContaining(name)
         }
         return customerRepository.findAll().toList();
     }
 
-    fun getFindByID(id: Int): Customer {
+    fun findByID(id: Int): Customer {
         return customerRepository.findById(id).orElseThrow {
             NotFoundException(Errors.ML201.message.format(id), Errors.ML201.code)
         }

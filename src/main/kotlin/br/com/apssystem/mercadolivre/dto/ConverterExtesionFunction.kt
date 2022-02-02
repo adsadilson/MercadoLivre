@@ -1,27 +1,27 @@
 package br.com.apssystem.mercadolivre.dto
 
-import br.com.apssystem.mercadolivre.controller.input.BookInput
-import br.com.apssystem.mercadolivre.controller.input.BookInputUpdate
-import br.com.apssystem.mercadolivre.controller.input.CustomerInput
+import br.com.apssystem.mercadolivre.controller.request.BookRequest
+import br.com.apssystem.mercadolivre.controller.request.BookRequestUpdate
+import br.com.apssystem.mercadolivre.controller.request.CustomerRequest
 import br.com.apssystem.mercadolivre.controller.response.BookResponse
 import br.com.apssystem.mercadolivre.controller.response.CustomerResponse
 import br.com.apssystem.mercadolivre.enums.BookStatus
 import br.com.apssystem.mercadolivre.model.Book
 import br.com.apssystem.mercadolivre.model.Customer
 
-fun CustomerInput.toModel(): Customer {
+fun CustomerRequest.toModel(): Customer {
     return Customer(name = this.name, email = this.email)
 }
 
-fun CustomerInput.toModel(id: Int): Customer {
+fun CustomerRequest.toModel(id: Int): Customer {
     return Customer(id = id, name = this.name, email = this.email)
 }
 
-fun BookInput.toModel(customer: Customer): Book {
+fun BookRequest.toModel(customer: Customer): Book {
     return Book(name = this.name, price = this.price, status = BookStatus.ATIVO, customer = customer)
 }
 
-fun BookInputUpdate.toModel(previousValue: Book): Book {
+fun BookRequestUpdate.toModel(previousValue: Book): Book {
     return Book(
         id = previousValue.id,
         name = this.name ?: previousValue.name,

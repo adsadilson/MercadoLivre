@@ -1,10 +1,10 @@
-package br.com.apssystem.mercadolivre.controller.input
+package br.com.apssystem.mercadolivre.controller.request
 
 import br.com.apssystem.mercadolivre.validation.EmailAvailable
 import javax.validation.constraints.Email
 import javax.validation.constraints.NotBlank
 
-data class CustomerInput (
+data class CustomerRequest (
 
     @field:NotBlank(message = "Nome deve ser informado")
     var name: String,
