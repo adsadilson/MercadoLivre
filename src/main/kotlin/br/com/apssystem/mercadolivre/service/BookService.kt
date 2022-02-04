@@ -12,49 +12,54 @@ import org.springframework.stereotype.Service
 
 @Service
 class BookService(
-    val bookRepository: BookRepository
+    val repository: BookRepository
 ) {
 
     fun findListAll(name: String?, pageable: Pageable): Page<Book> {
         name?.let {
-            return bookRepository.findByNameContaining(name, pageable)
+            return repository.findByNameContaining(name, pageable)
         }
-        return bookRepository.findAll(pageable);
+        return repository.findAll(pageable);
     }
 
     fun findByID(id: Int): Book {
-        return bookRepository.findById(id).orElseThrow {
+        return repository.findById(id).orElseThrow {
             NotFoundException(Errors.ML101.message.format(id), Errors.ML101.code)
         }
     }
 
     fun create(book: Book) {
-        bookRepository.save(book)
+        repository.save(book)
     }
 
     fun update(book: Book) {
-        bookRepository.save(book)
+        repository.save(book)
     }
 
     fun delete(id: Int) {
-        val book = bookRepository.getById(id)
+        val book = repository.getById(id)
         book.status = BookStatus.CANCELADO
         update(book)
     }
 
     fun idExists(id: Int): Boolean {
-        if (!bookRepository.existsById(id!!)) {
+        if (!repository.existsById(id)) {
             throw Exception()
         }
         return true
     }
 
     fun findActive(pageable: Pageable): Page<Book> {
-        return bookRepository.findByStatus(BookStatus.ATIVO, pageable)
+        return repository.findByStatus(BookStatus.ATIVO, pageable)
     }
 
     fun findAllByIds(bookIds: Set<Int>): List<Book> {
-        return bookRepository.findAllById(bookIds).toList();
+        return repository.findAllById(bookIds).toList();
+    }
+
+    fun purchase(books: MutableList<Book>) {
+        books.map { it.status =BookStatus.VENDIDO }
+        repository.saveAll(books)
     }
 
 }
