@@ -16,4 +16,7 @@ data class Customer(
 
     @Column(length = 250, nullable = false, unique = true)
     var email: String,
+
+    @Column(length = 255)
+    var password: String,
 )

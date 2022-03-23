@@ -42,13 +42,6 @@ class BookService(
         update(book)
     }
 
-    fun idExists(id: Int): Boolean {
-        if (!repository.existsById(id)) {
-            throw Exception()
-        }
-        return true
-    }
-
     fun findActive(pageable: Pageable): Page<Book> {
         return repository.findByStatus(BookStatus.ATIVO, pageable)
     }
