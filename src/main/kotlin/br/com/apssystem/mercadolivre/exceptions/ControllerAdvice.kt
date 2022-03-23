@@ -33,6 +33,18 @@ class ControllerAdvice {
         return ResponseEntity(erro, HttpStatus.BAD_REQUEST)
     }
 
+    @ExceptionHandler(NegocioException::class)
+    fun handleNegocioException(ex: NegocioException, request: WebRequest): ResponseEntity<ErrorResponse> {
+        var erro = ErrorResponse(
+            HttpStatus.BAD_REQUEST.value(),
+            ex.message,
+            ex.errorCode,
+            fields = null
+        )
+        return ResponseEntity(erro, HttpStatus.BAD_REQUEST)
+    }
+
+
     @ExceptionHandler(MethodArgumentNotValidException::class)
     fun handleMethodArgumentNotValidException(ex: MethodArgumentNotValidException, request: WebRequest): ResponseEntity<ErrorResponse> {
         var erro = ErrorResponse(

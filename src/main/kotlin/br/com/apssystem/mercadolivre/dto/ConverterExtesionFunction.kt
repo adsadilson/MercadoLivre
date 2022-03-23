@@ -10,15 +10,29 @@ import br.com.apssystem.mercadolivre.model.Book
 import br.com.apssystem.mercadolivre.model.Customer
 
 fun CustomerRequest.toModel(): Customer {
-    return Customer(name = this.name, email = this.email)
+    return Customer(
+        name = this.name,
+        email = this.email,
+        password = this.password
+    )
 }
 
 fun CustomerRequest.toModel(id: Int): Customer {
-    return Customer(id = id, name = this.name, email = this.email)
+    return Customer(
+        id = id,
+        name = this.name,
+        email = this.email,
+        password = this.password
+    )
 }
 
 fun BookRequest.toModel(customer: Customer): Book {
-    return Book(name = this.name, price = this.price, status = BookStatus.ATIVO, customer = customer)
+    return Book(
+        name = this.name,
+        price = this.price,
+        status = BookStatus.ATIVO,
+        customer = customer
+    )
 }
 
 fun BookRequestUpdate.toModel(previousValue: Book): Book {
@@ -34,7 +48,8 @@ fun BookRequestUpdate.toModel(previousValue: Book): Book {
 fun Customer.toResponse(): CustomerResponse {
     return CustomerResponse(
         name = this.name,
-        email = this.email
+        email = this.email,
+        password = this.password
     )
 }
 
